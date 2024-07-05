@@ -28,6 +28,7 @@ class Game {
     }
   }
 
+  // 유저 중 가장 구린 지연율을 반환
   getMaxLatency() {
     let maxLatency = 0;
     this.users.forEach((user) => {
@@ -39,6 +40,7 @@ class Game {
   getAllLocation(thisUserId) {
     const maxLatency = this.getMaxLatency();
 
+    // 추측 항법을 적용한 다른 유저들의 위치값을 저장.
     const locationData = this.users
       .filter((user) => user.id !== thisUserId)
       .map((user) => {
@@ -47,9 +49,14 @@ class Game {
       });
 
     const notThisUserLocationData = locationData.filter((data) => data.id !== thisUserId);
-    console.log(notThisUserLocationData);
+    if(notThisUserLocationData.length !== 0){
+      console.log(notThisUserLocationData);
+    }
+    
     return createLocationPacket(notThisUserLocationData);
   }
+
+  
 }
 
 export default Game;

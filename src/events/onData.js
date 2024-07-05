@@ -19,6 +19,7 @@ export const onData = (socket) => async (data) => {
 
       try {
         switch (packetType) {
+          // NORMAL타입 패킷인 경우(ID: 1)
           case PACKET_TYPE.NORMAL:
             const { handlerId, userId, payload } = packetParser(packet);
 
