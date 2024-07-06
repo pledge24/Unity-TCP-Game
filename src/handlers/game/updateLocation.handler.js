@@ -26,8 +26,8 @@ const updateLocationHandler = ({ socket, userId, payload }) => {
     user.updatePosition(x, y);
 
     // 다른 유저들의 동기화 위치를 패킷으로 제작 및 전송.
-    const packet = gameSession.getAllLocation(userId);
-    socket.write(packet);
+    // const packet = gameSession.getAllLocation(userId);
+    // socket.write(packet);
     
   } catch (e) {
     handlerError(socket, e);

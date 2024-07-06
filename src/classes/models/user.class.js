@@ -23,24 +23,15 @@ class User {
     const timeDiff = (Date.now() - this.lastUpdateTime + latency) / 1000; // ms -> s로 단위 변경
     const speed = 3; // 초당 3이동으로 클라에서 정의되어있음
 
-    // x, y축 변화량 저장.
-    const dx = this.x - this.prevX;
-    const dy = this.y - this.prevY;
+    // x, y축 유닛 벡터 저장.
+    const dir_x = this.x - this.prevX > 0 ? 1 : -1;
+    const dir_y = this.y - this.prevY > 0 ? 1 : -1;
 
-    // 기울기 각도와 이동 거리를 구함
-    
-    const theta = dx > 0 ? Math.atan(dy/dx) : 90;
-    const distance = speed * timeDiff; // 거리 = 속력 * 시간
-
-    setTimeout(function(){
-      console.log("this.x, this.prevX, this.y, this.prevY", this.x, this.prevX, this.y, this.prevY);
-      console.log("dx, dy, theta, distance", dx, dy, theta, distance);
-    }, 500);
-
+    const distance = speed * timeDiff;
 
     return {
-      x: this.x + Math.cos(theta)*distance,
-      y: this.y + Math.sin(theta)*distance,
+      x: this.x + dir_x*distance,
+      y: this.y + dir_y*distance
       // x: this.x,
       // y: this.y
     };
