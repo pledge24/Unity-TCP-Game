@@ -4,6 +4,8 @@ import { HANDLER_IDS, RESPONSE_SUCCESS_CODE } from '../../constants/handlerIds.j
 import { handlerError } from '../../utils/error/errorHandler.js';
 import { getGameSession } from '../../session/game.session.js';
 import { createUser, findUserByDeviceID, findUserLastpositionByID, updateUserLogin } from '../../db/user/user.db.js';
+import { ErrorCodes } from '../../utils/error/errorCodes.js';
+import CustomError from '../../utils/error/customError.js';
 
 // 초기화 핸들러. 클라이언트에게 접속 요청을 받을 때 사용한다.
 // InitialPayload: {deviceId, playerId, latency}
@@ -16,7 +18,8 @@ const initialHandler = async ({ socket, userId, payload }) => {
     let userData = await findUserByDeviceID(deviceId);
     if (!userData) {
       userData = await createUser(deviceId);
-    } else {
+    } 
+    else {
       await updateUserLogin(userData.id);
     }
 
@@ -32,18 +35,16 @@ const initialHandler = async ({ socket, userId, payload }) => {
     // 해당 유저 스폰 위치를 최근 위치로 설정.
     user.x = lastpositon.x;
     user.y = lastpositon.y;
-    // const packet = createLocationPacket([user]);
-    // socket.write(packet);
 
-    // 게임 세션이 1개이기 때문에 방이라는 개념이 없어
-    // createGame, joinGame 핸들러 대신 여기서 게임 세션을 추가한다.
+    // 해당 유저가 이미 게임에 존재하는 지 확인 후, 게임에 유저 추가.
     const gameSession = getGameSession();
+    if(gameSession.getUser(userData.deviceId)){
+      throw new CustomError(ErrorCodes.USER_ALREADY_EXIST, '해당 유저가 이미 존재합니다.');
+    }
     gameSession.addUser(user);
 
-    user.updatePosition
     // 초기화 핸들러를 성공적으로 처리했을경우, 응답 패킷 만들어 클라이언트에게 전송한다.
     const initialResponse = createResponse(HANDLER_IDS.INITIAL, RESPONSE_SUCCESS_CODE, {
-      // userId: deviceId,
       x: user.x,
       y: user.y
     });

@@ -11,7 +11,7 @@ const handlers = {
   },
   [HANDLER_IDS.UPDATE_LOCATION]: {
     handler: updateLocationHandler,
-    protoType: 'game.LocationUpdatePayload',
+    protoType: 'game.DirectionUpdatePayload',
   },
   // 다른 핸들러들을 추가
 };

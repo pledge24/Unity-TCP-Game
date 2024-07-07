@@ -37,21 +37,20 @@ class Game {
     return maxLatency;
   }
 
-  getAllLocation(thisUserId) {
+  getAllLocation(thisUserId, latency) {
     const maxLatency = this.getMaxLatency();
 
     // 추측 항법을 적용한 다른 유저들의 위치값을 저장.
     const locationData = this.users
-      .filter((user) => user.id !== thisUserId)
       .map((user) => {
-        const { x, y } = user.calculatePosition(maxLatency);
-        return { id: user.id, playerId: user.playerId, x, y };
+          const { x, y } = user.calculatePosition(maxLatency, latency);
+          return { id: user.id, playerId: user.playerId, x, y };    
       });
 
     const notThisUserLocationData = locationData.filter((data) => data.id !== thisUserId);
-    if(notThisUserLocationData.length !== 0){
-      console.log(notThisUserLocationData);
-    }
+    // if(notThisUserLocationData.length !== 0){
+    //   console.log(notThisUserLocationData);
+    // }
     
     return createLocationPacket(notThisUserLocationData);
   }
