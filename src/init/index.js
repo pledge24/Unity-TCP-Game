@@ -12,7 +12,7 @@ const initServer = async () => {
 
     const gameId = uuidv4();
     const gameSession = addGameSession(gameId);
-    gameSession.startSendingSyncLocation();
+    
     // console.log(gameSession);
   } catch (e) {
     console.error(e);

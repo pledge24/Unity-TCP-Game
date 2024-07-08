@@ -1,13 +1,11 @@
-import IntervalManager from '../managers/interval.manager.js';
 import { createLocationPacket } from '../../utils/notification/game.notification.js';
 
-const MAX_PLAYERS = 4;
+const MAX_PLAYERS = 10;
 
 class Game {
   constructor(id) {
     this.id = id;
     this.users = [];
-    this.intervalManager = new IntervalManager();
   }
 
   addUser(user) {
@@ -15,7 +13,6 @@ class Game {
       throw new Error('Game session is full');
     }
     this.users.push(user);
-    this.updateMaxLatency();
   }
 
   getUser(userId) {
@@ -35,7 +32,7 @@ class Game {
     this.users.forEach((user) => {
       maxLatency = Math.max(maxLatency, user.latency);
     });
-    console.log("maxLatency", maxLatency);
+    // console.log("maxLatency", maxLatency);
     return maxLatency;
   }
 
@@ -55,22 +52,6 @@ class Game {
     // }
     
     return createLocationPacket(notThisUserLocationData);
-  }
-
-  updateMaxLatency(){
-    clearInterval(this.interval);
-    this.startSendingSyncLocation();
-  }
-
-  startSendingSyncLocation() {
-    const maxLatency = this.getMaxLatency(); 
-    this.interval = setInterval(() => {
-      for(const user of this.users){
-        console.log(`user: ${user.id}, user.latency, ${user.latency}`);
-        const packet = this.getAllLocation(user.id);
-        user.socket.write(packet);
-      }
-    }, maxLatency);
   }
 }
 
