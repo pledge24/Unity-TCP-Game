@@ -43,6 +43,7 @@ export const packetParser = (data) => {
   // 페이로드를 바이트배열 -> 객체로 디코딩합니다.
   try {
     payload = PayloadType.decode(packet.payload);
+    //console.log("Received payload", payload);
   } catch (e) {
     throw new CustomError(ErrorCodes.PACKET_DECODE_ERROR, '패킷 디코딩 중 오류가 발생했습니다.');
   }

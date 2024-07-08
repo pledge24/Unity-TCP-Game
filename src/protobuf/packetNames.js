@@ -7,6 +7,7 @@ export const packetNames = {
   },
   game: {
     LocationUpdatePayload: 'game.LocationUpdatePayload',
+    DirectionUpdatePayload: 'game.DirectionUpdatePayload',
   },
   response: {
     Response: 'response.Response',
