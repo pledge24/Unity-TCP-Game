@@ -37,7 +37,6 @@ const updateLocationHandler = ({ socket, userId, payload }) => {
     const sleep = (ms) => {
       return new Promise((r) => setTimeout(r, ms));
     }
-    
     sleep(user.latency).then(() => {
       socket.write(positionResponse);
       socket.write(packet);

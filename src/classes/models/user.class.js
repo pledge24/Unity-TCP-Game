@@ -22,6 +22,7 @@ class User {
     this.lastUpdateTime = Date.now();
   }
 
+
   calculatePosition(maxLatency, latency) {
     const timeDiff = (this.latency + latency) / 1000; // ms -> s로 단위 변경
     
@@ -30,8 +31,6 @@ class User {
     return {
       x: this.x + distance*this.dirX,
       y: this.y + distance*this.dirY
-      // x: this.x,
-      // y: this.y
     };
   }
   

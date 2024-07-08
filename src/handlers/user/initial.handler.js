@@ -48,8 +48,10 @@ const initialHandler = async ({ socket, userId, payload }) => {
       x: user.x,
       y: user.y
     });
-
     socket.write(initialResponse);
+
+    
+
   } catch (e) {
     handlerError(socket, e);
   }
