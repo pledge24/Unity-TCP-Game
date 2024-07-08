@@ -13,7 +13,7 @@ const initialHandler = async ({ socket, userId, payload }) => {
   try {
     const { deviceId, playerId, latency } = payload;
 
-    console.log("deviceId, playerId, latency", deviceId, playerId, latency);
+    // console.log("deviceId, playerId, latency", deviceId, playerId, latency);
 
     let userData = await findUserByDeviceID(deviceId);
     if (!userData) {
@@ -23,11 +23,11 @@ const initialHandler = async ({ socket, userId, payload }) => {
       await updateUserLogin(userData.id);
     }
 
-    console.log("userData", userData)
+    // console.log("userData", userData)
     // 해당 유저의 마지막 위치를 가져온다.
     const lastpositon = await findUserLastpositionByID(userData.id);
 
-    console.log("lastpositon", lastpositon);
+    // console.log("lastpositon", lastpositon);
 
     // 유저 세션에 해당 유저 추가, 해당 유저 게임 세션에 추가.
     const user = addUser(socket, deviceId, playerId, latency);

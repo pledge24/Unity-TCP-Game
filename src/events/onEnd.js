@@ -8,8 +8,7 @@ export const onEnd = (socket) => async () => {
   const user = getUserBySocket(socket);
   const userUuid = (await findUserByDeviceID(user.id)).id
   console.log("onEnd: findUserByDeviceID Executed! userUuid: ", userUuid);
-  const test = await updateUserLastposition(userUuid, user.x, user.y);
-  console.log("updateUserLastposition(userUuid, user.x, user.y): ", test);
+  await updateUserLastposition(userUuid, user.x, user.y);
 
   // 세션에서 유저 삭제
   removeUser(socket);
